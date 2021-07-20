@@ -1,0 +1,21 @@
+{
+    "name": "andikaryanto11/ci4graphql",
+    "description": "ORM Database mapping for Codeigniter 4",
+    "keywords": ["codeigniter4", "codeigniter", "Graphql", "API"],
+    "homepage": "https://packagist.org/packages/andikaryanto11/ciorm",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^7.2",
+		"andikaryanto11/ci4orm":"dev-master",
+		"webonyx/graphql-php": "^14.9"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "AndikAryanto11\\": "src/"
+        }
+    }
+    
+}
