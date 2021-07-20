@@ -1,16 +1,36 @@
 <?php
 
+namespace AndikGraphql\Controller;
+
+use AndikGraphql\Resolver;
 use CodeIgniter\Controller;
+use CodeIgniter\Database\BaseConnection;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Executor\Executor;
 
+
 class GraphQL extends Controller
 {
+     /**
+      * @var BaseConnection
+      */
+     protected $db;
+     protected $vendorDir;
+     protected $schemas;
+
+     public function __construct()
+     {
+          $this->db = \Config\Database::connect();
+          $reflection = new \ReflectionClass(\Composer\Autoload\ClassLoader::class);
+          $this->vendorDir = dirname(dirname($reflection->getFileName()));
+     }
 
      public function index()
      {
-          $this->setResolvers(include '../Graphql/resolvers.php');
-          $schema = \GraphQL\Utils\BuildSchema::build(file_get_contents('../Graphql/schema.graphqls'));
+          $this->setResolvers(Resolver::resolve());
+          $this->setSchemas();
+          $this->setAllAppSchemas();
+          $builtSchemas = \GraphQL\Utils\BuildSchema::build($this->schemas);
 
           $input = $this->request->getJSON();
           $query = $input->query;
@@ -21,15 +41,10 @@ class GraphQL extends Controller
                'db'     => $this->db
           ];
 
-          $result = \GraphQL\GraphQL::executeQuery($schema, $query, null, $context, $variables);
-
-          // $response->getBody()->write(json_encode($result));
-
-          // $sqlQueryLogger = $this->db->getConfiguration()->getSQLLogger();
-          // $this->logger->info(json_encode($sqlQueryLogger->queries));
+          $result = \GraphQL\GraphQL::executeQuery($builtSchemas, $query, null, $context, $variables);
 
           return $this->response->setStatusCode(200)
-				->setJSON($result);
+               ->setJSON($result);
      }
 
      private function setResolvers($resolvers)
@@ -69,5 +84,26 @@ class GraphQL extends Controller
 
                return Executor::defaultFieldResolver($source, $args, $context, $info);
           });
+     }
+
+     private function setSchemas()
+     {
+          $this->schemas = file_get_contents($this->vendorDir . '/andikaryanto11/ci4graphql/src/schema.graphqls');
+          $this->schemas .= "\n" . file_get_contents(APPPATH . '/Graphql/schema.graphqls');
+     }
+
+     private function setAllAppSchemas()
+     {
+          $result = array();
+          $dir = APPPATH . "/Graphql/Schemas";
+          $cdir = scandir($dir);
+          foreach ($cdir as $key => $value) {
+               if (!in_array($value, array(".", ".."))) {
+                    if (!is_dir($dir . DIRECTORY_SEPARATOR . $value)) {
+                         $result[$value] = $value;
+                         $this->schemas .= "\n" . file_get_contents(APPPATH . '/Graphql/Schemas/' . $value);
+                    }
+               }
+          }
      }
 }
