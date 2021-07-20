@@ -8,6 +8,9 @@ use App\Graphql\QueryResolver;
 class Resolver
 {
 
+     /**
+      * Resolve All Queries and Mutation Graphql
+      */
      public static function resolve()
      {
           $query = new QueryResolver();
