@@ -7,7 +7,6 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
-		"andikaryanto11/ci4orm":"dev-master",
 		"webonyx/graphql-php": "^14.9"
     },
     "minimum-stability": "dev",
