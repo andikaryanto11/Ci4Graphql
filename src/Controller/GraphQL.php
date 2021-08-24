@@ -2,6 +2,7 @@
 
 namespace AndikGraphql\Controller;
 
+use AndikGraphql\Interfaces\IGraphQLController;
 use AndikGraphql\Resolver;
 use CodeIgniter\Controller;
 use CodeIgniter\Database\BaseConnection;
@@ -9,20 +10,22 @@ use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Executor\Executor;
 
 
-class GraphQL extends Controller
+class GraphQL extends Controller implements IGraphQLController
 {
-     /**
-      * @var BaseConnection
-      */
-     protected $db;
      protected $vendorDir;
      protected $schemas;
 
      public function __construct()
      {
-          $this->db = \Config\Database::connect();
           $reflection = new \ReflectionClass(\Composer\Autoload\ClassLoader::class);
           $this->vendorDir = dirname(dirname($reflection->getFileName()));
+     }
+
+     /**
+      * @inheritdoc
+      */
+     public function getContext(){
+         
      }
 
      public function index()
@@ -37,11 +40,7 @@ class GraphQL extends Controller
 
           $variables = isset($input->variables) ? $input->variables : null;
 
-          $context = [
-               'db'     => $this->db
-          ];
-
-          $result = \GraphQL\GraphQL::executeQuery($builtSchemas, $query, null, $context, $variables);
+          $result = \GraphQL\GraphQL::executeQuery($builtSchemas, $query, null, $this->getContext(), (array)$variables);
 
           return $this->response->setStatusCode(200)
                ->setJSON($result);
