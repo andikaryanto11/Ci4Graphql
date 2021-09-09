@@ -5,7 +5,6 @@ namespace AndikGraphql\Controller;
 use AndikGraphql\Interfaces\IGraphQLController;
 use AndikGraphql\Resolver;
 use CodeIgniter\Controller;
-use CodeIgniter\Database\BaseConnection;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Executor\Executor;
 
@@ -24,8 +23,8 @@ class GraphQL extends Controller implements IGraphQLController
      /**
       * @inheritdoc
       */
-     public function getContext(){
-         
+     public function getContext()
+     {
      }
 
      public function index()
@@ -45,6 +44,7 @@ class GraphQL extends Controller implements IGraphQLController
           return $this->response->setStatusCode(200)
                ->setJSON($result);
      }
+
 
      private function setResolvers($resolvers)
      {

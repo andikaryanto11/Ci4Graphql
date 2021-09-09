@@ -4,7 +4,7 @@ namespace AndikGraphql;
 
 use AndikGraphql\Interfaces\ILogicResolver;
 
-class LogicResolver implements ILogicResolver{
+class LogicResolver implements ILogicResolver {
 
      public function __invoke($root, $args, $context)
      {

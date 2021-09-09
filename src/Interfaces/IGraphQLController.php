@@ -9,4 +9,6 @@ interface IGraphQLController {
       * @return array
       */
      public function getContext();
+
+
 }

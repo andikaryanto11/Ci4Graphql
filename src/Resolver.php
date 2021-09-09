@@ -15,7 +15,7 @@ class Resolver
      {
           $query = new QueryResolver();
           $mutation = new MutationResolver();
-
+          
           return [
                'Query' => $query->register()->execute(),
                'Mutation' => $mutation->register()->execute()
