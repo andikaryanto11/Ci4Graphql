@@ -18,11 +18,4 @@ class LogicResolver implements ILogicResolver{
 
      }
 
-     /**
-      * Tell Resolver to return invokable class
-      */
-     public static function execute()
-     {
-          return new static;
-     }
 }

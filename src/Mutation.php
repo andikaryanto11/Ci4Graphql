@@ -13,7 +13,7 @@ class Mutation {
       * get array mutations data
       * @return array
       */
-     public function execute(){
+     public function getMutations(){
           return $this->mutations;
      }
 }

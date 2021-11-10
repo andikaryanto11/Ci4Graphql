@@ -13,7 +13,7 @@ class Query {
       * get array queries data
       * @return array
       */
-     public function execute(){
+     public function getQueries(){
           return $this->queries;
      }
 }
