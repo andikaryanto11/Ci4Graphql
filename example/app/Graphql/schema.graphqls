@@ -1,0 +1,7 @@
+type Query {
+     getTest: String
+}
+
+type Mutation {
+     someMutation: SomeOutput
+}
