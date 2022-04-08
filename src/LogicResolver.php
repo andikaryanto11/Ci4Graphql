@@ -3,18 +3,19 @@
 namespace AndikGraphql;
 
 use AndikGraphql\Interfaces\ILogicResolver;
+use GraphQL\Type\Definition\ResolveInfo;
 
-class LogicResolver implements ILogicResolver{
+class LogicResolver implements ILogicResolver {
 
-     public function __invoke($root, $args, $context)
+     public function __invoke($root, $args, $context, ResolveInfo $info)
      {
-          return $this->reveal($root, $args, $context);
+          return $this->resolve($root, $args, $context, $info);
      }
 
      /**
       * @inheritdoc
       */
-     public function reveal($root, $args, $context){
+     public function resolve($root, $args, $context, ResolveInfo $info){
 
      }
 

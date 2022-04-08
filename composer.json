@@ -7,7 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.4",
-		"webonyx/graphql-php": "^14.9"
+		"webonyx/graphql-php": "^14.11"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

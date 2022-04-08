@@ -3,11 +3,12 @@
 namespace App\Graphql\Resolvers;
 
 use AndikGraphql\LogicResolver;
+use GraphQL\Type\Definition\ResolveInfo;
 
 class Test extends LogicResolver
 {
 
-    public function reveal($root, $args, $context)
+    public function resolve($root, $args, $context, ResolveInfo $info)
     {
          return 'test';
     }
